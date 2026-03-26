@@ -2,22 +2,26 @@ import { Link, Outlet } from 'react-router-dom'
 
 export function Layout() {
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+    <div className="flex min-h-screen font-sans">
       
-      {/* Menu Lateral Fixo */}
-      <aside style={{ width: '250px', backgroundColor: '#f4f4f5', padding: '20px' }}>
-        <h2 style={{ color: '#ef4444' }}>Ligeirinho Food</h2>
+      {/* Sidebar com o vermelho da marca e arredondamento customizado */}
+      <aside className="w-64 bg-white border-r border-gray-200 p-6 flex flex-col">
+        <h2 className="text-2xl font-bold text-brand-red mb-10">
+          Ligeirinho Food
+        </h2>
         
-        <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginTop: '30px' }}>
-          {/* O componente Link substitui a tag <a> para evitar o recarregamento da página */}
-          <Link to="/" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}> Dashboard</Link>
-          <Link to="/pedidos" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}> Pedidos</Link>
+        <nav className="flex flex-col gap-4">
+          <Link to="/" className="text-brand-dark hover:text-brand-orange font-medium transition-colors">
+             Dashboard
+          </Link>
+          <Link to="/pedidos" className="text-brand-dark hover:text-brand-orange font-medium transition-colors">
+             Pedidos
+          </Link>
         </nav>
       </aside>
 
-      {/* Conteúdo Dinâmico */}
-      <main style={{ flex: 1, padding: '30px' }}>
-        {/* O Outlet é a "janela" onde as páginas (Dashboard, Pedidos) vão aparecer */}
+      {/* Área de conteúdo principal */}
+      <main className="flex-1 p-8">
         <Outlet />
       </main>
       

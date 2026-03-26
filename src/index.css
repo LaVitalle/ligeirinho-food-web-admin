@@ -1,0 +1,12 @@
+/* Importando a fonte Inter do Google Fonts para a tipografia */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilo global básico para o fundo do painel */
+body {
+  background-color: #f8fafc; /* Um cinza super claro para contrastar com os cards brancos */
+  color: #1e293b;
+}
