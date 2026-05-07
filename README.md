@@ -1,75 +1,45 @@
-# React + TypeScript + Vite
+# Admin Mobile Mockup - Ligeirinho Food
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é um projeto de mockup para o painel administrativo do aplicativo Ligeirinho Food, desenvolvido com React, Vite, TypeScript e Tailwind CSS.
 
-Currently, two official plugins are available:
+## Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React** - Biblioteca para interfaces de usuário
+- **Vite** - Ferramenta de build rápida
+- **TypeScript** - Superset do JavaScript com tipagem
+- **Tailwind CSS** - Framework CSS utilitário
+- **shadcn/ui** - Componentes UI acessíveis
+- **React Router** - Roteamento para aplicações React
+- **TanStack Query** - Gerenciamento de estado de servidor
 
-## React Compiler
+## Como executar
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+1. Instale as dependências:
+   ```bash
+   npm install
+   ```
 
-Note: This will impact Vite dev & build performances.
+2. Execute o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
 
-## Expanding the ESLint configuration
+3. Abra [http://localhost:8080](http://localhost:8080) no navegador.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Scripts disponíveis
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Gera a build de produção
+- `npm run build:dev` - Gera a build de desenvolvimento
+- `npm run lint` - Executa o linter
+- `npm run preview` - Visualiza a build de produção
+- `npm run test` - Executa os testes
+- `npm run test:watch` - Executa os testes em modo watch
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Estrutura do projeto
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `src/components/` - Componentes reutilizáveis
+- `src/pages/` - Páginas da aplicação
+- `src/lib/` - Utilitários e configurações
+- `src/hooks/` - Hooks customizados
+- `public/` - Assets estáticos

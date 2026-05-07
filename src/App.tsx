@@ -1,19 +1,41 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Layout } from './components/Layout'
-import { Dashboard } from './pages/Dashboard'
-import { Pedidos } from './pages/Pedidos'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Layout } from "@/components/Layout";
+import Index from "./pages/Index.tsx";
+import Login from "./pages/Login.tsx";
+import Instituicoes from "./pages/Instituicoes.tsx";
+import Cantinas from "./pages/Cantinas.tsx";
+import Categorias from "./pages/Categorias.tsx";
+import Icons from "./pages/Icons.tsx";
+import MetodosPagamento from "./pages/MetodosPagamento.tsx";
+import NotFound from "./pages/NotFound.tsx";
 
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* A rota pai é o Layout. Tudo dentro dela vai aparecer no <Outlet /> */}
-        <Route path="/" element={<Layout />}>
-          {/* O "index" significa que o Dashboard é a página padrão quando acessar "/" */}
-          <Route index element={<Dashboard />} />
-          <Route path="pedidos" element={<Pedidos />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  )
-}
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<Index />} />
+            <Route path="/instituicoes" element={<Instituicoes />} />
+            <Route path="/cantinas" element={<Cantinas />} />
+            <Route path="/categorias" element={<Categorias />} />
+            <Route path="/icons" element={<Icons />} />
+            <Route path="/metodos-pagamento" element={<MetodosPagamento />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;

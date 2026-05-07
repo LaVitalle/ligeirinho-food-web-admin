@@ -1,12 +1,79 @@
-/* Importando a fonte Inter do Google Fonts para a tipografia */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Estilo global básico para o fundo do painel */
-body {
-  background-color: #f8fafc; /* Um cinza super claro para contrastar com os cards brancos */
-  color: #1e293b;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Brand: Ligeirinho Food */
+    --primary: 22 95% 53%;          /* Orange */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 35 100% 60%;
+
+    --brand-red: 358 75% 42%;
+    --brand-red-foreground: 0 0% 100%;
+    --brand-yellow: 45 100% 55%;
+    --brand-yellow-foreground: 358 75% 30%;
+
+    --secondary: 30 50% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 30 20% 96%;
+    --muted-foreground: 222 15% 45%;
+
+    --accent: 22 95% 95%;
+    --accent-foreground: 22 95% 35%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --success-soft: 142 70% 92%;
+
+    --border: 30 20% 90%;
+    --input: 30 20% 90%;
+    --ring: 22 95% 53%;
+
+    --radius: 1rem;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(22 95% 53%), hsl(15 90% 50%));
+    --gradient-warm: linear-gradient(135deg, hsl(35 100% 55%), hsl(15 90% 50%));
+    --gradient-red: linear-gradient(180deg, hsl(358 75% 48%), hsl(358 80% 35%));
+    --gradient-yellow: linear-gradient(180deg, hsl(45 100% 60%), hsl(38 100% 50%));
+    --gradient-bg: linear-gradient(160deg, hsl(22 95% 53%) 0%, hsl(15 90% 48%) 100%);
+
+    /* Shadows */
+    --shadow-card: 0 4px 20px -8px hsl(22 50% 30% / 0.12);
+    --shadow-elevated: 0 10px 30px -10px hsl(22 60% 30% / 0.25);
+    --shadow-glow: 0 0 40px hsl(22 95% 60% / 0.4);
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html, body { @apply bg-background text-foreground font-sans antialiased; }
+  h1, h2, h3, h4 { @apply font-display; }
+}
+
+@layer utilities {
+  .bg-gradient-hero { background: var(--gradient-hero); }
+  .bg-gradient-warm { background: var(--gradient-warm); }
+  .bg-gradient-red { background: var(--gradient-red); }
+  .bg-gradient-yellow { background: var(--gradient-yellow); }
+  .bg-gradient-bg { background: var(--gradient-bg); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-elevated { box-shadow: var(--shadow-elevated); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
 }
