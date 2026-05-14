@@ -4,7 +4,8 @@ import { User, Mail, Lock, Phone, Key } from "lucide-react";
 import mascot from "@/assets/mascot.png";
 import loginBg from "@/assets/login-bg.jpg";
 import { Button } from "@/components/ui/button";
-import { ApiError, register as registerUser, saveAuthToken } from "@/lib/auth";
+import { ApiError } from "@/lib/api";
+import { register as registerUser, saveAuthToken } from "@/lib/auth";
 import { toast } from "sonner";
 
 const Register = () => {
@@ -29,7 +30,7 @@ const Register = () => {
         accessCode,
       });
 
-      saveAuthToken(response.accessToken);
+      saveAuthToken(response.data.accessToken);
       toast.success("Cadastro realizado com sucesso.");
       navigate("/");
     } catch (error) {

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Store, CheckCircle2, Ban, Plus, Settings, MapPin, Camera, Image as ImageIcon, Mail, Clock } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Store, CheckCircle2, Ban, Plus, Settings, MapPin, Camera, Image as ImageIcon, Mail, Clock, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -10,6 +11,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { StatCard } from "@/components/StatCard";
 import { StatusBadge } from "@/components/StatusBadge";
 import { toast } from "sonner";
+import { institutionService } from "@/lib/institutions";
 
 const cantinas = [
   { name: "Cantina Central", local: "Bloco A - Térreo", hue: 22 },
@@ -22,6 +24,13 @@ const cantinas = [
 
 const Cantinas = () => {
   const [open, setOpen] = useState(false);
+
+  const { data: instRes, isLoading: loadingInst } = useQuery({
+    queryKey: ["institutions-all"],
+    queryFn: () => institutionService.getAll(1, 100),
+  });
+
+  const institutions = instRes?.data || [];
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,11 +134,14 @@ const Cantinas = () => {
               </div>
               <div>
                 <Label>Instituição</Label>
-                <Select><SelectTrigger className="mt-1.5"><SelectValue placeholder="Selecione a instituição" /></SelectTrigger>
+                <Select disabled={loadingInst}>
+                  <SelectTrigger className="mt-1.5">
+                    <SelectValue placeholder={loadingInst ? "Carregando..." : "Selecione a instituição"} />
+                  </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="1">Faculdade Donaduzzi</SelectItem>
-                    <SelectItem value="2">Biopark Corporate</SelectItem>
-                    <SelectItem value="3">Unioeste Campus</SelectItem>
+                    {institutions.map(inst => (
+                      <SelectItem key={inst.id} value={inst.id}>{inst.name}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>

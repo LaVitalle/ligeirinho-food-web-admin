@@ -4,7 +4,8 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import mascot from "@/assets/mascot.png";
 import loginBg from "@/assets/login-bg.jpg";
 import { Button } from "@/components/ui/button";
-import { ApiError, login as loginUser, saveAuthToken } from "@/lib/auth";
+import { ApiError } from "@/lib/api";
+import { login as loginUser, saveAuthToken } from "@/lib/auth";
 import { toast } from "sonner";
 
 const Login = () => {
@@ -20,7 +21,7 @@ const Login = () => {
 
     try {
       const response = await loginUser({ email, password });
-      saveAuthToken(response.accessToken);
+      saveAuthToken(response.data.accessToken);
       toast.success("Login efetuado com sucesso.");
       navigate("/");
     } catch (error) {

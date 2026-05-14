@@ -1,8 +1,18 @@
-import { NavLink, Link } from "react-router-dom";
-import { Menu, X, Bell, User, Search } from "lucide-react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { Menu, X, Bell, User, Search, LogOut } from "lucide-react";
 import { useState } from "react";
 import mascot from "@/assets/mascot.png";
 import { cn } from "@/lib/utils";
+import { isAuthenticated, logout } from "@/lib/auth";
+import { toast } from "sonner";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navItems = [
   { to: "/", label: "Home" },
@@ -15,6 +25,14 @@ const navItems = [
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const loggedIn = isAuthenticated();
+
+  const handleLogout = () => {
+    logout();
+    toast.success("Logout realizado com sucesso.");
+    navigate("/login");
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
@@ -54,9 +72,33 @@ export const Header = () => {
           <button className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground hover:bg-accent hover:text-foreground transition" aria-label="Notificações">
             <Bell className="h-5 w-5" />
           </button>
-          <Link to="/login" className="h-10 w-10 inline-flex items-center justify-center rounded-full border-2 border-primary text-primary hover:bg-accent transition" aria-label="Conta">
-            <User className="h-5 w-5" />
-          </Link>
+          
+          {loggedIn ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="h-10 w-10 inline-flex items-center justify-center rounded-full border-2 border-primary text-primary hover:bg-accent transition" aria-label="Conta">
+                  <User className="h-5 w-5" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate("/perfil")}>
+                  <User className="mr-2 h-4 w-4" />
+                  Perfil
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout} className="text-brand-red focus:text-brand-red">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sair
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link to="/login" className="h-10 w-10 inline-flex items-center justify-center rounded-full border-2 border-primary text-primary hover:bg-accent transition" aria-label="Entrar">
+              <User className="h-5 w-5" />
+            </Link>
+          )}
+
           <button
             className="lg:hidden h-10 w-10 inline-flex items-center justify-center rounded-md hover:bg-accent transition"
             onClick={() => setOpen((v) => !v)}

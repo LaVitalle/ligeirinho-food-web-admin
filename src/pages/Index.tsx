@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom";
-import { Building2, ShoppingCart } from "lucide-react";
+import { Building2, ShoppingCart, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/StatusBadge";
+import { useQuery } from "@tanstack/react-query";
+import { institutionService } from "@/lib/institutions";
 
 const Index = () => {
+  const { data: countRes, isLoading: loadingCount } = useQuery({
+    queryKey: ["institutions-count"],
+    queryFn: () => institutionService.getCount(),
+  });
+
+  const institutionCount = countRes?.data.total ?? 0;
+
   return (
     <div className="space-y-6">
       <div className="text-center md:text-left">
@@ -17,11 +26,18 @@ const Index = () => {
             <div className="h-14 w-14 rounded-xl bg-accent text-primary flex items-center justify-center">
               <Building2 className="h-7 w-7" />
             </div>
-            <StatusBadge variant="warning">Ativas</StatusBadge>
+            <StatusBadge variant="success">Ativas</StatusBadge>
           </div>
           <h2 className="mt-5 text-xl font-bold">Instituições Cadastradas</h2>
           <p className="mt-1 text-sm text-muted-foreground">Escolas, universidades e centros corporativos integrados ao sistema.</p>
-          <p className="mt-4 text-4xl font-extrabold text-primary">42<span className="text-base font-normal text-muted-foreground ml-2">unidades</span></p>
+          <div className="mt-4 flex items-baseline">
+            {loadingCount ? (
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            ) : (
+              <span className="text-4xl font-extrabold text-primary">{institutionCount}</span>
+            )}
+            <span className="text-base font-normal text-muted-foreground ml-2">unidades</span>
+          </div>
           <Link to="/instituicoes" className="mt-5">
             <Button variant="hero" size="lg" className="w-full">Gerenciar Instituições</Button>
           </Link>

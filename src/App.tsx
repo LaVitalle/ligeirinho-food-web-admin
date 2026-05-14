@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout } from "@/components/Layout";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index.tsx";
 import Login from "./pages/Login.tsx";
 import Register from "./pages/Register.tsx";
@@ -25,13 +26,15 @@ const App = () => (
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route element={<Layout />}>
-            <Route path="/" element={<Index />} />
-            <Route path="/instituicoes" element={<Instituicoes />} />
-            <Route path="/cantinas" element={<Cantinas />} />
-            <Route path="/categorias" element={<Categorias />} />
-            <Route path="/icons" element={<Icons />} />
-            <Route path="/metodos-pagamento" element={<MetodosPagamento />} />
+          <Route element={<ProtectedRoute />}>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/instituicoes" element={<Instituicoes />} />
+              <Route path="/cantinas" element={<Cantinas />} />
+              <Route path="/categorias" element={<Categorias />} />
+              <Route path="/icons" element={<Icons />} />
+              <Route path="/metodos-pagamento" element={<MetodosPagamento />} />
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
