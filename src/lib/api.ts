@@ -78,6 +78,20 @@ export const api = {
     });
   },
 
+  patch: <T>(path: string, body?: unknown, options?: RequestInit) => {
+    const isFormData = body instanceof FormData;
+    const headers = new Headers(options?.headers);
+    if (!isFormData && body && !headers.has("Content-Type")) {
+      headers.set("Content-Type", "application/json");
+    }
+    return request<T>(path, {
+      ...options,
+      method: "PATCH",
+      headers,
+      body: isFormData ? body : JSON.stringify(body),
+    });
+  },
+
   delete: <T>(path: string, options?: RequestInit) =>
     request<T>(path, { ...options, method: "DELETE" }),
 };

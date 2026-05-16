@@ -3,18 +3,19 @@ import { Building2, ShoppingCart, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/StatusBadge";
 import { useQuery } from "@tanstack/react-query";
-import { institutionService } from "@/lib/institutions";
+import { api, ApiResponse } from "@/lib/api";
 
 const Index = () => {
-  const { data: countRes, isLoading: loadingCount } = useQuery({
-    queryKey: ["institutions-count"],
-    queryFn: () => institutionService.getCount(),
+  const { data: countsRes, isLoading } = useQuery({
+    queryKey: ["admin-counts"],
+    queryFn: () => api.get<ApiResponse<{ institutions: number; canteens: number }>>("/reports/admin-counts"),
   });
 
-  const institutionCount = countRes?.data.total ?? 0;
+  const institutionCount = countsRes?.data.institutions ?? 0;
+  const canteenCount = countsRes?.data.canteens ?? 0;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-foreground">
       <div className="text-center md:text-left">
         <h1 className="text-3xl md:text-4xl font-bold">Bem-vindo, <span className="text-primary">Admin</span></h1>
         <p className="text-muted-foreground mt-1">Painel administrativo do Ligeirinho Food.</p>
@@ -31,7 +32,7 @@ const Index = () => {
           <h2 className="mt-5 text-xl font-bold">Instituições Cadastradas</h2>
           <p className="mt-1 text-sm text-muted-foreground">Escolas, universidades e centros corporativos integrados ao sistema.</p>
           <div className="mt-4 flex items-baseline">
-            {loadingCount ? (
+            {isLoading ? (
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             ) : (
               <span className="text-4xl font-extrabold text-primary">{institutionCount}</span>
@@ -52,15 +53,23 @@ const Index = () => {
           </div>
           <h2 className="mt-5 text-xl font-bold">Cantinas Cadastradas</h2>
           <p className="mt-1 text-sm text-muted-foreground">Pontos de venda e distribuição de alimentos monitorados.</p>
-          <p className="mt-4 text-4xl font-extrabold text-brand-red">128<span className="text-base font-normal text-muted-foreground ml-2">pontos</span></p>
+          <div className="mt-4 flex items-baseline">
+            {isLoading ? (
+              <Loader2 className="h-8 w-8 animate-spin text-brand-red" />
+            ) : (
+              <span className="text-4xl font-extrabold text-brand-red">{canteenCount}</span>
+            )}
+            <span className="text-base font-normal text-muted-foreground ml-2">pontos</span>
+          </div>
           <Link to="/cantinas" className="mt-5">
             <Button variant="red" size="lg" className="w-full">Visualizar Cantinas</Button>
           </Link>
         </article>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-4">
         <QuickLink to="/categorias" title="Categorias" desc="Gerenciar categorias de produtos" />
+        <QuickLink to="/produtos" title="Produtos" desc="Catálogo de itens das cantinas" />
         <QuickLink to="/icons" title="Ícones" desc="Biblioteca visual do sistema" />
         <QuickLink to="/metodos-pagamento" title="Pagamentos" desc="Métodos aceitos no app" />
       </div>
