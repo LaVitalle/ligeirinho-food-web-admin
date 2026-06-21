@@ -1,5 +1,22 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000";
 
+/**
+ * Envelope padrão de resposta da API (TransformInterceptor do backend).
+ * `pagination` só aparece em listagens paginadas.
+ */
+export interface ApiResponse<T> {
+  data: T;
+  status: {
+    code: number;
+    message: string;
+  };
+  pagination?: {
+    page: number;
+    perPage: number;
+    hasNextPage: boolean;
+  };
+}
+
 export class ApiError extends Error {
   status: number;
   body: unknown;

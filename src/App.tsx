@@ -11,7 +11,6 @@ import Register from "./pages/Register.tsx";
 import Instituicoes from "./pages/Instituicoes.tsx";
 import Cantinas from "./pages/Cantinas.tsx";
 import Categorias from "./pages/Categorias.tsx";
-import Produtos from "./pages/Produtos.tsx";
 import Icons from "./pages/Icons.tsx";
 import MetodosPagamento from "./pages/MetodosPagamento.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -33,7 +32,6 @@ const App = () => (
               <Route path="/instituicoes" element={<Instituicoes />} />
               <Route path="/cantinas" element={<Cantinas />} />
               <Route path="/categorias" element={<Categorias />} />
-              <Route path="/produtos" element={<Produtos />} />
               <Route path="/icons" element={<Icons />} />
               <Route path="/metodos-pagamento" element={<MetodosPagamento />} />
             </Route>

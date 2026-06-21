@@ -1,17 +1,4 @@
-import { api } from "./api";
-
-export interface ApiResponse<T> {
-  data: T;
-  status: {
-    code: number;
-    message: string;
-  };
-  pagination?: {
-    page: number;
-    perPage: number;
-    hasNextPage: boolean;
-  };
-}
+import { api, ApiResponse } from "./api";
 
 export interface Institution {
   id: string;

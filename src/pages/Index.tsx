@@ -67,9 +67,8 @@ const Index = () => {
         </article>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-3">
         <QuickLink to="/categorias" title="Categorias" desc="Gerenciar categorias de produtos" />
-        <QuickLink to="/produtos" title="Produtos" desc="Catálogo de itens das cantinas" />
         <QuickLink to="/icons" title="Ícones" desc="Biblioteca visual do sistema" />
         <QuickLink to="/metodos-pagamento" title="Pagamentos" desc="Métodos aceitos no app" />
       </div>

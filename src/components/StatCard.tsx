@@ -7,6 +7,8 @@ interface StatCardProps {
   unit?: string;
   icon: LucideIcon;
   accent?: "orange" | "green" | "red" | "neutral";
+  /** Renderiza o valor como texto (nome, data) em fonte menor, em vez do número de destaque. */
+  isText?: boolean;
 }
 
 const accents = {
@@ -16,7 +18,7 @@ const accents = {
   neutral: { bar: "bg-muted-foreground/40", iconBg: "bg-muted text-muted-foreground" },
 };
 
-export const StatCard = ({ label, value, unit, icon: Icon, accent = "orange" }: StatCardProps) => {
+export const StatCard = ({ label, value, unit, icon: Icon, accent = "orange", isText = false }: StatCardProps) => {
   const a = accents[accent];
   return (
     <div className="relative rounded-2xl bg-card border border-border shadow-card p-5 overflow-hidden">
@@ -27,7 +29,12 @@ export const StatCard = ({ label, value, unit, icon: Icon, accent = "orange" }: 
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
-          <p className="mt-1 text-3xl font-bold text-foreground leading-tight">
+          <p
+            className={cn(
+              "mt-1 font-bold text-foreground leading-tight",
+              isText ? "text-lg line-clamp-1" : "text-3xl"
+            )}
+          >
             {value}
             {unit && <span className="text-sm font-normal text-muted-foreground ml-1.5">{unit}</span>}
           </p>

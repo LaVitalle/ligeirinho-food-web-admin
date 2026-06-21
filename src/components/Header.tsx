@@ -19,7 +19,6 @@ const navItems = [
   { to: "/instituicoes", label: "Instituições" },
   { to: "/cantinas", label: "Cantinas" },
   { to: "/categorias", label: "Categorias" },
-  { to: "/produtos", label: "Produtos" },
   { to: "/icons", label: "Ícones" },
   { to: "/metodos-pagamento", label: "Pagamentos" },
 ];
