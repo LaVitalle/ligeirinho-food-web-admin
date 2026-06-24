@@ -65,7 +65,6 @@ const Cantinas = () => {
   const [cnpj, setCnpj] = useState("");
   const [block, setBlock] = useState("");
   const [room, setRoom] = useState("");
-  const [schedule, setSchedule] = useState("");
   // Seller fields (only for creation)
   const [sellerName, setSellerName] = useState("");
   const [sellerEmail, setSellerEmail] = useState("");
@@ -97,7 +96,6 @@ const Cantinas = () => {
       setCnpj(editingCanteen.cnpj || "");
       setBlock(editingCanteen.block || "");
       setRoom(editingCanteen.room || "");
-      setSchedule(""); // Schedule field placeholder
       // Seller fields are not editable here
     } else {
       resetForm();
@@ -204,7 +202,6 @@ const Cantinas = () => {
     setCnpj("");
     setBlock("");
     setRoom("");
-    setSchedule("");
     setSellerName("");
     setSellerEmail("");
     setSellerPassword("");
@@ -395,19 +392,6 @@ const Cantinas = () => {
                     value={room}
                     onChange={e => setRoom(e.target.value)}
                     placeholder="Ex: Térreo" 
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Horário de Funcionamento (Informativo)</Label>
-                <div className="relative">
-                  <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input 
-                    value={schedule}
-                    onChange={e => setSchedule(e.target.value)}
-                    placeholder="Ex: Seg a Sex, 08:00 - 22:00" 
-                    className="pl-9" 
                   />
                 </div>
               </div>

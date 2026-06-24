@@ -1,6 +1,7 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { Menu, X, Bell, User, Search, LogOut } from "lucide-react";
+import { Menu, X, User, Search, LogOut } from "lucide-react";
 import { useState } from "react";
+import { NotificationDropdown } from "@/components/NotificationDropdown";
 import mascot from "@/assets/mascot.png";
 import { cn } from "@/lib/utils";
 import { isAuthenticated, logout } from "@/lib/auth";
@@ -69,9 +70,7 @@ export const Header = () => {
           <button className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground hover:bg-accent hover:text-foreground transition" aria-label="Buscar">
             <Search className="h-5 w-5" />
           </button>
-          <button className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground hover:bg-accent hover:text-foreground transition" aria-label="Notificações">
-            <Bell className="h-5 w-5" />
-          </button>
+          <NotificationDropdown />
           
           {loggedIn ? (
             <DropdownMenu>

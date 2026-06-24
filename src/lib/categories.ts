@@ -4,6 +4,7 @@ export interface Category {
   id: string;
   name: string;
   iconKey: string | null;
+  iconUrl: string | null;
   displayOrder: number;
 }
 

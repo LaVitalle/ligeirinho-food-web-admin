@@ -56,7 +56,12 @@ async function request<T>(
   const data = await response.json().catch(() => null);
 
   if (!response.ok) {
-    const message = data?.message || data?.status?.message || (data?.error && String(data.error)) || response.statusText;
+    let message = data?.message || data?.status?.message || (data?.error && String(data.error)) || response.statusText;
+    
+    if (Array.isArray(message)) {
+      message = message.join("\\n");
+    }
+
     throw new ApiError(message || "Erro na requisição", response.status, data);
   }
 

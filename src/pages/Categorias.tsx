@@ -20,11 +20,19 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PageHeader } from "@/components/PageHeader";
 import { toast } from "sonner";
 import { categoryService, Category } from "@/lib/categories";
+import { iconService } from "@/lib/icons";
 import { ApiError } from "@/lib/api";
 
 const Categorias = () => {
@@ -36,7 +44,7 @@ const Categorias = () => {
 
   // Form states
   const [name, setName] = useState("");
-  const [iconKey, setIconKey] = useState("");
+  const [iconKey, setIconKey] = useState("none");
   const [displayOrder, setDisplayOrder] = useState("0");
 
   // Queries
@@ -45,11 +53,17 @@ const Categorias = () => {
     queryFn: () => categoryService.getAll(),
   });
 
+  // Query icons list for dropdown selection
+  const { data: iconsRes } = useQuery({
+    queryKey: ["icons"],
+    queryFn: () => iconService.getAll(),
+  });
+
   // Reset form when editingCategory changes
   useEffect(() => {
     if (editingCategory) {
       setName(editingCategory.name);
-      setIconKey(editingCategory.iconKey || "");
+      setIconKey(editingCategory.iconKey || "none");
       setDisplayOrder(String(editingCategory.displayOrder));
     } else {
       resetForm();
@@ -110,7 +124,7 @@ const Categorias = () => {
     
     const payload = {
       name,
-      iconKey: iconKey || undefined,
+      iconKey: iconKey === "none" || !iconKey ? undefined : iconKey,
       displayOrder: parseInt(displayOrder) || 0,
     };
 
@@ -123,11 +137,12 @@ const Categorias = () => {
 
   const resetForm = () => {
     setName("");
-    setIconKey("");
+    setIconKey("none");
     setDisplayOrder("0");
   };
 
   const categories = categoriesRes?.data || [];
+  const iconsList = iconsRes?.data || [];
   const isPending = createMutation.isPending || updateMutation.isPending;
 
   return (
@@ -158,8 +173,12 @@ const Categorias = () => {
             {categories.map((c) => (
               <li key={c.id} className="px-5 py-4 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:items-center hover:bg-muted/30 transition-colors">
                 <div className="sm:col-span-5 flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-accent text-primary flex items-center justify-center">
-                    <Tag className="h-5 w-5" />
+                  <div className="h-10 w-10 rounded-lg bg-accent text-primary flex items-center justify-center p-1.5 border border-border/50">
+                    {c.iconUrl ? (
+                      <img src={c.iconUrl} alt={c.name} className="h-full w-full object-contain" />
+                    ) : (
+                      <Tag className="h-5 w-5" />
+                    )}
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">{c.name}</p>
@@ -218,14 +237,25 @@ const Categorias = () => {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="cat-icon">Key do Ícone</Label>
-                <Input 
-                  id="cat-icon"
-                  value={iconKey}
-                  onChange={e => setIconKey(e.target.value)}
-                  placeholder="Ex: snack, pizza..." 
-                  className="mt-1.5" 
-                />
+                <Label htmlFor="cat-icon">Ícone</Label>
+                <Select value={iconKey} onValueChange={setIconKey}>
+                  <SelectTrigger id="cat-icon" className="mt-1.5">
+                    <SelectValue placeholder="Sem ícone" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-[300px]">
+                    <SelectItem value="none">Nenhum</SelectItem>
+                    {iconsList.map((i) => (
+                      <SelectItem key={i.id} value={i.key}>
+                        <div className="flex items-center gap-2">
+                          {i.url ? (
+                            <img src={i.url} alt={i.name} className="h-4 w-4 object-contain shrink-0" />
+                          ) : null}
+                          <span className="truncate">{i.name} ({i.key})</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <Label htmlFor="cat-order">Ordem de Exibição</Label>

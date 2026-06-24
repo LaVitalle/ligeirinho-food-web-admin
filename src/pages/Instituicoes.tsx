@@ -345,7 +345,7 @@ const Instituicoes = () => {
               </div>
               <div>
                 <Label>Cidade</Label>
-                <Select value={cityId} onValueChange={setCityId} disabled={!stateId || loadingCities}>
+                <Select key={`${stateId}-${cities.length}`} value={cityId} onValueChange={setCityId} disabled={!stateId || loadingCities}>
                   <SelectTrigger className="mt-1.5">
                     <SelectValue placeholder={loadingCities ? "Carregando..." : "Selecionar"} />
                   </SelectTrigger>
